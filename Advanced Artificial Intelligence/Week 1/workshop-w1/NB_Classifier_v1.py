@@ -23,6 +23,7 @@ class NB_Classifier:
     default_missing_count = 0.000001
     probabilities = {}
     log_probabilities = False
+    laplacian = 1
 
     def __init__(self, file_name, fitted_model=None):
         self.read_data(file_name)
@@ -80,12 +81,13 @@ class NB_Classifier:
             for key, val in counts.items():
                 variables = key.split('|')
 
+                # apply laplacian constant to the probability calculation
                 if len(variables) == 1:
                     # prior probability
-                    probability = float(val/self.num_data_instances)
+                    probability = float(val + self.laplacian/self.num_data_instances + self.laplacian * len(counts))
                 else:
                     # conditional probability
-                    probability = float(val/prior_counts[variables[1]])
+                    probability = float(val + self.laplacian/prior_counts[variables[1]] + self.laplacian * len(counts))
 
                 if self.log_probabilities is False:
                     prob_distribution[key] = probability
