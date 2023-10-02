@@ -29,9 +29,14 @@ class BankAccount {
 		
 		// Declare a function to withdraw from the balance
 		void Withdraw(float x) {
-			balance -= x;
-			std::cout << std::endl;
-			std::cout << "Withdrawn $" << std::fixed << std::setprecision(2) << x << " into account." << std::endl;
+			if (balance - x >= 0) {
+				balance -= x;
+				std::cout << std::endl;
+				std::cout << "Withdrawn $" << std::fixed << std::setprecision(2) << x << " into account." << std::endl;
+			} else {
+				std::cout << std::endl;
+				std::cout << "You cannot withdraw $" << std::fixed << std::setprecision(2) << x << " from your account. You currently have $" << balance << "." << std::endl;
+			}
 		}
 
 		// Declare a function to output the account information
