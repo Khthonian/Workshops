@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdexcept>
+#include <string>
 
 class Student {
 	public:
@@ -8,7 +9,7 @@ class Student {
 			// Empty default constructor
 		}
 
-		// Score constructor
+		// Setter constructor
 		Student(int newScore) {
 			// Assign the user input to the class variable
 			score = newScore;
@@ -33,12 +34,15 @@ int main (int argc, char *argv[]) {
 
 	// Loop 10 times to add each student
 	for (int i = 0; i < 10; i++) {
+		// Declare a temp variable to hold the user input
+		std::string userInput;
 
 		// Error catching in case a user has an invalid input
 		try {
 			// Print a prompt for the user to give a score
 			std::cout << "Enter score for student " << (i + 1) << ": ";
-			std::cin >> tempScore;
+			std::cin >> userInput;
+			tempScore = std::stoi(userInput);
 		} catch (const std::invalid_argument& e) {
 			std::cerr << "Invalid input! Please enter a valid integer." << std::endl;
 			return 1;
