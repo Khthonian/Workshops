@@ -42,7 +42,7 @@ The total number of students is simply an integer variable assigned with a value
 The average score is calculated by summing the scores and dividing by the total number of students.
 
 ##### The Highest and Lowest Score
-The highest and lowest scores are found by using an if statement to check if the new value is higher or lower respectively than the current value. If it's true, it becomes the new value.
+The highest and lowest scores are found by using an if statement to check if the new value is higher or lower respectively than the current value. If it's true, it becomes the new value. It is assumed that the scores originate from a test that has a maximum of 100 marks, or that the scores are percentages. As such, `highScore` and `lowScore` are initialised as 0 and 100 respectively, as they are the worst possible limits for the highest and lowest scores.
 
 ##### The Above and Below Average
-The above and below average also uses an if statement, to check whether the current score if above or below the average score respectively. If it's true, the corresponding variable is incremented by 1.
+The above and below average also uses an if statement, to check whether the current score if above or below the average score respectively. If it's true, the corresponding variable is incremented by 1. `aboveAverage` and `belowAverage` are both initialised to 0, as that is the lowest possible value for these variables.
