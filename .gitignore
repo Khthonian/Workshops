@@ -1,1 +1,5 @@
+# Ignore updates to pycache
 *__pycache__/
+
+# Ignore updates to the config directories for AAI
+Advanced Artificial Intelligence/*/config/
