@@ -6,12 +6,12 @@
 from pomegranate import *
 from pomegranate import DiscreteDistribution
 
-# Variables are RainN and UmbrellaN+1 for N = 0, 1, ... 
+# Variables are RainN and UmbrellaN+1 for N = 0, 1, ...
 #
 # We have a prior for Rain0, two values 'y'es and 'n'o:
-Rain0   = DiscreteDistribution({'y': 0.5, 'n': 0.5})
+Rain0 = DiscreteDistribution({"y": 0.5, "n": 0.5})
 
-# Transition model 
+# Transition model
 #
 # Conditional distribution relating RainN and RainN+1. Notation for
 # the conditional probability table is:
@@ -22,22 +22,16 @@ Rain0   = DiscreteDistribution({'y': 0.5, 'n': 0.5})
 #
 # The distribution for each day has to be entered by hand for now:
 Rain1 = ConditionalProbabilityTable(
-        [['y', 'y', 0.7],
-         ['y', 'n', 0.3],
-         ['n', 'y', 0.3],
-         ['n', 'n', 0.7]], [Rain0])
+    [["y", "y", 0.7], ["y", "n", 0.3], ["n", "y", 0.3], ["n", "n", 0.7]], [Rain0]
+)
 
 Rain2 = ConditionalProbabilityTable(
-        [['y', 'y', 0.7],
-         ['y', 'n', 0.3],
-         ['n', 'y', 0.3],
-         ['n', 'n', 0.7]], [Rain1])
-         
+    [["y", "y", 0.7], ["y", "n", 0.3], ["n", "y", 0.3], ["n", "n", 0.7]], [Rain1]
+)
+
 Rain3 = ConditionalProbabilityTable(
-        [['y', 'y', 0.7],
-         ['y', 'n', 0.3],
-         ['n', 'y', 0.3],
-         ['n', 'n', 0.7]], [Rain2])
+    [["y", "y", 0.7], ["y", "n", 0.3], ["n", "y", 0.3], ["n", "n", 0.7]], [Rain2]
+)
 
 # Sensor model
 #
@@ -49,22 +43,16 @@ Rain3 = ConditionalProbabilityTable(
 #
 # Values for Umbrella are 'y'es and 'n'o:
 Umbrella1 = ConditionalProbabilityTable(
-        [['y', 'y', 0.9],
-         ['y', 'n', 0.1],
-         ['n', 'y', 0.2],
-         ['n', 'n', 0.8]], [Rain1])
+    [["y", "y", 0.9], ["y", "n", 0.1], ["n", "y", 0.2], ["n", "n", 0.8]], [Rain1]
+)
 
 Umbrella2 = ConditionalProbabilityTable(
-        [['y', 'y', 0.9],
-         ['y', 'n', 0.1],
-         ['n', 'y', 0.2],
-         ['n', 'n', 0.8]], [Rain2])
-         
+    [["y", "y", 0.9], ["y", "n", 0.1], ["n", "y", 0.2], ["n", "n", 0.8]], [Rain2]
+)
+
 Umbrella3 = ConditionalProbabilityTable(
-        [['y', 'y', 0.9],
-         ['y', 'n', 0.1],
-         ['n', 'y', 0.2],
-         ['n', 'n', 0.8]], [Rain3])
+    [["y", "y", 0.9], ["y", "n", 0.1], ["n", "y", 0.2], ["n", "n", 0.8]], [Rain3]
+)
 #
 # Five nodes:
 s1 = Node(Rain0, name="Rain0")
@@ -86,49 +74,49 @@ model.add_edge(s6, s7)
 # Fix the model structure
 model.bake()
 
-#Evidence
-scenario = [[None, None, 'y', None, None, None, 'y']]
+# Evidence
+scenario = [[None, None, "y", None, None, None, "y"]]
 
 # A message about the evidence presented.
 #
 # This is hard-coded to reflect the variables used in the model (see
 # below).
 msg = ""
-if scenario[0][0] == 'y':
+if scenario[0][0] == "y":
     msg += "Rain in Day 0. "
-if scenario[0][0] == 'n':
+if scenario[0][0] == "n":
     msg += "No rain on Day 0. "
-if scenario[0][1] == 'y':
+if scenario[0][1] == "y":
     msg += "Rain on Day 1. "
-if scenario[0][1] == 'n':
+if scenario[0][1] == "n":
     msg += "No rain on Day 1. "
-if scenario[0][2] == 'y':
+if scenario[0][2] == "y":
     msg += "Umbrella on Day 1. "
-if scenario[0][2] == 'n':
+if scenario[0][2] == "n":
     msg += "No umbrella on Day 1. "
-if scenario[0][3] == 'y':
+if scenario[0][3] == "y":
     msg += "Rain on Day 2. "
-if scenario[0][3] == 'n':
+if scenario[0][3] == "n":
     msg += "No rain on Day 2. "
-if scenario[0][4] == 'y':
+if scenario[0][4] == "y":
     msg += "Umbrella on Day 2. "
-if scenario[0][4] == 'n':
+if scenario[0][4] == "n":
     msg += "No umbrella on Day 2. "
-if scenario[0][5] == 'y':
+if scenario[0][5] == "y":
     msg += "Rain on Day 3. "
-if scenario[0][5] == 'n':
+if scenario[0][5] == "n":
     msg += "No rain on Day 3. "
-if scenario[0][6] == 'y':
+if scenario[0][6] == "y":
     msg += "Umbrella on Day 3. "
-if scenario[0][6] == 'n':
+if scenario[0][6] == "n":
     msg += "No umbrella on Day 3. "
-   
+
 print("Evidence is: ", msg)
 print("\n")
 
 # model.predict.proba returns the distribution, wrapped in some
 # meta-data:
-predict_proba =  model.predict_proba(scenario)
+predict_proba = model.predict_proba(scenario)
 
 # Pretty print the probabilities
 for i in range(model.state_count()):
@@ -138,7 +126,7 @@ for i in range(model.state_count()):
     if isinstance(dist, Distribution):
         # Each element here is a distribution object. Pull out the
         # probabilities
-        probs =  dist.items()
+        probs = dist.items()
         # Now the hard-coded variable names:
         if i == 0:
             msg = "Rain0: "
@@ -146,13 +134,13 @@ for i in range(model.state_count()):
             msg = "Rain1: "
         elif i == 2:
             msg = "Umbrella1: "
-        elif i ==3:
+        elif i == 3:
             msg = "Rain2: "
-        elif i ==4:
+        elif i == 4:
             msg = "Umbrella2: "
-        elif i ==5:
+        elif i == 5:
             msg = "Rain3: "
-        elif i ==5:
+        elif i == 5:
             msg = "Umbrella: "
-            
+
         print(msg, probs)
