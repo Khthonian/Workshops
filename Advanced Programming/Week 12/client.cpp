@@ -32,24 +32,35 @@ int main() {
     return 1;
   }
 
-  // Prompt the user to enter a list of numbers
-  std::cout << "Enter a list of numbers separated by spaces: ";
-  std::string input;
-  std::getline(std::cin, input);
-
   // Prepare the list of numbers
-  std::stringstream ss(input);
-  int num;
-  std::vector<int> numbers;
-  while (ss >> num) {
-    numbers.push_back(num);
+  std::vector<double> numbers;
+
+  while (true) {
+    // Prompt the user to enter a list of numbers
+    std::cout << "Enter a list of numbers separated by spaces: ";
+    std::string input;
+    std::getline(std::cin, input);
+
+    // Prepare the list of numbers
+    std::stringstream ss(input);
+    double num;
+    while (ss >> num) {
+      numbers.push_back(num);
+    }
+
+    if (ss.fail() && !ss.eof()) {
+      std::cout << "Invalid input!" << std::endl;
+      numbers.clear();
+    } else {
+      break;
+    }
   }
 
   // Send data to the server
-  send(clientSocket, numbers.data(), numbers.size() * sizeof(int), 0);
+  send(clientSocket, numbers.data(), numbers.size() * sizeof(double), 0);
 
   // Receive computed statistics from the server
-  int stats[4];  // Assuming the server sends average, min, max, and median
+  double stats[4];  // Assuming the server sends average, min, max, and median
   recv(clientSocket, stats, sizeof(stats), 0);
 
   // Display computed statistics to the user

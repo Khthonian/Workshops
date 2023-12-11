@@ -51,49 +51,53 @@ int main() {
       return 1;
     }
 
-  // Receive data from the client
-  int receivedData[100];  // Assuming a maximum of 100 numbers
-  ssize_t bytesReceived = recv(clientSocket, receivedData, sizeof(receivedData), 0);
+    // Receive data from the client
+    double receivedData[100];  // Assuming a maximum of 100 numbers
+    ssize_t bytesReceived =
+        recv(clientSocket, receivedData, sizeof(receivedData), 0);
 
-  if (bytesReceived == -1) {
-    std::cerr << "Error receiving data from client." << std::endl;
-    close(clientSocket);
-    continue;
-  }
+    if (bytesReceived == -1) {
+      std::cerr << "Error receiving data from client." << std::endl;
+      close(clientSocket);
+      continue;
+    }
 
-  // Process the received data
-  std::vector<int> numbers(receivedData, receivedData + bytesReceived / sizeof(int));
+    // Process the received data
+    std::vector<double> numbers(receivedData,
+                                receivedData + bytesReceived / sizeof(double));
 
-  // Print received numbers and their count
-  std::cout << "Received " << numbers.size() << " numbers from the client: ";
-  for (int num : numbers) {
-    std::cout << num << " ";
-  }
-  std::cout << std::endl;
+    // Print received numbers and their count
+    std::cout << "Received " << numbers.size() << " numbers from the client: ";
+    for (double num : numbers) {
+      std::cout << num << " ";
+    }
+    std::cout << std::endl;
 
-  // Calculate statistics
-  double average = std::accumulate(numbers.begin(), numbers.end(), 0.0) / numbers.size();
-  int minimum = *std::min_element(numbers.begin(), numbers.end());
-  int maximum = *std::max_element(numbers.begin(), numbers.end());
+    // Calculate statistics
+    double average =
+        std::accumulate(numbers.begin(), numbers.end(), 0.0) / numbers.size();
+    double minimum = *std::min_element(numbers.begin(), numbers.end());
+    double maximum = *std::max_element(numbers.begin(), numbers.end());
 
-  std::sort(numbers.begin(), numbers.end());
-  int median;
-  if (numbers.size() % 2 == 0) {
-    median = (numbers[numbers.size() / 2 - 1] + numbers[numbers.size() / 2]) / 2;
-  } else {
-    median = numbers[numbers.size() / 2];
-  }
+    std::sort(numbers.begin(), numbers.end());
+    double median;
+    if (numbers.size() % 2 == 0) {
+      median =
+          (numbers[numbers.size() / 2 - 1] + numbers[numbers.size() / 2]) / 2;
+    } else {
+      median = numbers[numbers.size() / 2];
+    }
 
-  // Print computed statistics
-  std::cout << "Computed Statistics:\n";
-  std::cout << "Average: " << average << "\n";
-  std::cout << "Minimum: " << minimum << "\n";
-  std::cout << "Maximum: " << maximum << "\n";
-  std::cout << "Median: " << median << "\n";
+    // Print computed statistics
+    std::cout << "Computed Statistics:\n";
+    std::cout << "Average: " << average << "\n";
+    std::cout << "Minimum: " << minimum << "\n";
+    std::cout << "Maximum: " << maximum << "\n";
+    std::cout << "Median: " << median << "\n";
 
-  // Send computed statistics back to the client
-  int stats[] = {static_cast<int>(average), minimum, maximum, median};
-  send(clientSocket, stats, sizeof(stats), 0);
+    // Send computed statistics back to the client
+    double stats[] = {static_cast<double>(average), minimum, maximum, median};
+    send(clientSocket, stats, sizeof(stats), 0);
 
     // Close the client socket
     close(clientSocket);
