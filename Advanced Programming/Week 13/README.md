@@ -29,3 +29,33 @@ To prevent race conditions in the program, the `_dataset_` vector is used in a r
 ## Result Merging
 
 As the results are written directly to the `_processedData_` vector, the results are effectively being merged automatically. As soon as all threads have finished execution, the results are already merged.
+
+## Usage
+
+### Compilation
+
+To compile the program, use the following input:
+
+```bash
+g++ -std=c++20 -o data dataProcessing.cpp dataProcessing.h -pthread
+```
+
+### Execution
+
+#### Input File Generation
+
+There is a Python script included to easily create large files to test the program. To use this script, use the following input:
+
+```bash
+# Example using 200 lines
+python inputMaker.py 200
+```
+
+#### Program Execution
+
+To execute the program, give the paths to the input and output files, and the number of threads, with the following input:
+
+```bash
+# Example using 4 threads
+./data input.txt output.txt 4
+```
