@@ -1,5 +1,7 @@
 // Copyright 2023 Stewart Charles Fisher II
 
+#include <sys/types.h>
+
 #include "dataProcessing.h"
 
 // Define a function to load data from file
@@ -77,6 +79,13 @@ int main(int argc, char** argv) {
                  "<num_threads>"
               << std::endl;
     return 0;
+  }
+
+  int maxThreads = std::thread::hardware_concurrency();
+  std::cout << "Maximum number of available threads: " << maxThreads
+            << std::endl;
+  if (std::stoi(argv[3]) > maxThreads) {
+    return 1;
   }
 
   std::string inputFilename = argv[1];
