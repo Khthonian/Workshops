@@ -1,6 +1,2 @@
-# Ignore input and output files
-input.txt
-output.txt
-
 # Ignore executable
 data
