@@ -1,6 +1,8 @@
 // Copyright 2023 Stewart Charles Fisher II
 
 // Include libraries
+#include <sys/types.h>
+
 #include <fstream>
 #include <iostream>
 #include <mutex>

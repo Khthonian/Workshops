@@ -1,7 +1,5 @@
 // Copyright 2023 Stewart Charles Fisher II
 
-#include <sys/types.h>
-
 #include "dataProcessing.h"
 
 // Define a function to load data from file
